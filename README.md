@@ -12,6 +12,26 @@ practices](https://nickjanetakis.com/blog/best-practices-around-production-ready
 based on building and deploying dozens of assorted Dockerized web apps since
 late 2014.
 
+upstream        https://github.com/nickjj/docker-django-example.git (fetch)
+upstream        https://github.com/nickjj/docker-django-example.git (push)
+
+Remove Upstream from Fork
+To remove the upstream reference from a Git fork, you can use the git remote rm command to delete the remote named "upstream" from your local repository.
+ After running git remote rm upstream, you can verify the removal by checking the remaining remotes with git remote -v.
+
+It is important to note that this action only removes the remote reference locally. The fork relationship on the GitHub platform itself is not automatically severed by this command. To completely disassociate a fork from its upstream repository on GitHub, you must use the platform's settings. Navigate to your repository's Settings > General, scroll to the Danger Zone, and click "Leave fork network".
+ This action makes your repository independent and removes its status as a fork, but it is permanent and cannot be reversed.
+
+If you wish to keep your fork's history but start fresh from the upstream repository, you can reset your local branch to match the upstream. For example, to reset the main branch:
+
+git fetch upstream
+git checkout main
+git reset --hard upstream/main
+git push origin main --force
+
+This will overwrite your fork's main branch with the upstream's main branch.
+ The --force flag is necessary because you are rewriting history.
+
 **This app is using Django 5.2.5 and Python 3.13.7**. The screenshot shows
 `X.X.X` since they get updated regularly:
 
