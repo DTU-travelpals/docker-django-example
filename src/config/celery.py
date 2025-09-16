@@ -8,5 +8,5 @@ app: Celery = Celery(os.getenv("COMPOSE_PROJECT_NAME", "hello"))
 app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 
-if (app.configured):
-    print(f'${app.conf}')
+if app.configured:
+    print(f"${app.conf}")
