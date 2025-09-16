@@ -12,8 +12,8 @@ practices](https://nickjanetakis.com/blog/best-practices-around-production-ready
 based on building and deploying dozens of assorted Dockerized web apps since
 late 2014.
 
-upstream        https://github.com/nickjj/docker-django-example.git (fetch)
-upstream        https://github.com/nickjj/docker-django-example.git (push)
+upstream        <https://github.com/nickjj/docker-django-example.git> (fetch)
+upstream        <https://github.com/nickjj/docker-django-example.git> (push)
 
 Remove Upstream from Fork
 To remove the upstream reference from a Git fork, you can use the git remote rm command to delete the remote named "upstream" from your local repository.
@@ -70,7 +70,7 @@ out for something else on your own.
 - [TailwindCSS](https://tailwindcss.com/)
 - [Heroicons](https://heroicons.com/)
 
-#### But what about JavaScript?!
+#### But what about JavaScript?
 
 Picking a JS library is a very app specific decision because it depends on
 which library you like and it also depends on if your app is going to be
@@ -100,28 +100,28 @@ having Dockerized and deployed a number of Django projects. Here's a few (but
 not all) note worthy additions and changes.
 
 - **Packages and extensions**:
-    - *[gunicorn](https://gunicorn.org/)* for an app server in both development and production
-    - *[whitenoise](https://github.com/evansd/whitenoise)* for serving static files
-    - *[django-debug-toolbar](https://github.com/jazzband/django-debug-toolbar)* for displaying info about a request
+  - *[gunicorn](https://gunicorn.org/)* for an app server in both development and production
+  - *[whitenoise](https://github.com/evansd/whitenoise)* for serving static files
+  - *[django-debug-toolbar](https://github.com/jazzband/django-debug-toolbar)* for displaying info about a request
 - **Linting and formatting**:
-    - *[ruff](https://github.com/astral-sh/ruff)* is used to lint and format the code base
+  - *[ruff](https://github.com/astral-sh/ruff)* is used to lint and format the code base
 - **Django apps**:
-    - Add `pages` app to render a home page
-    - Add `up` app to provide a few health check pages
+  - Add `pages` app to render a home page
+  - Add `up` app to provide a few health check pages
 - **Config**:
-    - Log to STDOUT so that Docker can consume and deal with log output
-    - Extract a bunch of configuration settings into environment variables
-    - Rename project directory from its custom name to `config/`
-    - `src/config/settings.py` and the `.env` file handles configuration in all environments
+  - Log to STDOUT so that Docker can consume and deal with log output
+  - Extract a bunch of configuration settings into environment variables
+  - Rename project directory from its custom name to `config/`
+  - `src/config/settings.py` and the `.env` file handles configuration in all environments
 - **Front-end assets**:
-    - `assets/` contains all your CSS, JS, images, fonts, etc. and is managed by esbuild
-    - Custom `502.html` and `maintenance.html` pages
-    - Generate favicons using modern best practices
+  - `assets/` contains all your CSS, JS, images, fonts, etc. and is managed by esbuild
+  - Custom `502.html` and `maintenance.html` pages
+  - Generate favicons using modern best practices
 - **Django defaults that are changed**:
-    - Use Redis as the default Cache back-end
-    - Use signed cookies as the session back-end
-    - `public/` is the static directory where Django will serve static files from
-    - `public_collected/` is where `collectstatic` will write its files to
+  - Use Redis as the default Cache back-end
+  - Use signed cookies as the session back-end
+  - `public/` is the static directory where Django will serve static files from
+  - `public_collected/` is where `collectstatic` will write its files to
 
 Besides the Django app itself:
 
@@ -151,7 +151,7 @@ of [WSL or WSL
 That's because we're going to be running shell commands. You can always modify
 these commands for PowerShell if you want.
 
-#### Clone this repo anywhere you want and move into the directory:
+### Clone this repo anywhere you want and move into the directory
 
 ```sh
 git clone https://github.com/nickjj/docker-django-example hellodjango
@@ -160,13 +160,13 @@ cd hellodjango
 # Optionally checkout a specific tag, such as: git checkout 0.11.0
 ```
 
-#### Copy an example .env file because the real one is git ignored:
+### Copy an example .env file because the real one is git ignored
 
 ```sh
 cp .env.example .env
 ```
 
-#### Build everything:
+### Build everything
 
 *The first time you run this it's going to take 5-10 minutes depending on your
 internet connection speed and computer's hardware specs. That's because it's
@@ -192,7 +192,7 @@ Linux and your `uid:gid` aren't `1000:1000` (you can verify this by running
 `id`). Check out the docs in the `.env` file to customize the `UID` and `GID`
 variables to fix this.
 
-#### Setup the initial database:
+### Setup the initial database
 
 ```sh
 # You can run this from a 2nd terminal.
@@ -201,18 +201,18 @@ variables to fix this.
 
 *We'll go over that `./run` script in a bit!*
 
-#### Check it out in a browser:
+### Check it out in a browser
 
 Visit <http://localhost:8000> in your favorite browser.
 
-#### Linting the code base:
+### Linting the code base
 
 ```sh
 # You should get no output (that means everything is operational).
 ./run lint
 ```
 
-#### Formatting the code base:
+### Formatting the code base
 
 ```sh
 # You should see that everything is unchanged (it's all already formatted).
@@ -221,14 +221,14 @@ Visit <http://localhost:8000> in your favorite browser.
 
 *There's also a `./run quality` command to run the above commands together.*
 
-#### Running the test suite:
+### Running the test suite
 
 ```sh
 # You should see all passing tests. Warnings are typically ok.
 ./run manage test
 ```
 
-#### Stopping everything:
+### Stopping everything
 
 ```sh
 # Stop the containers and remove a few Docker related resources associated to this project.
@@ -284,7 +284,7 @@ few variants of the string "hello" and update a few Docker related resources.
 And by we I mean I created a zero dependency shell script that does all of the
 heavy lifting for you. All you have to do is run the script below.
 
-#### Run the rename-project script included in this repo:
+#### Run the rename-project script included in this repo
 
 ```sh
 # The script takes 2 arguments.
@@ -315,7 +315,7 @@ out](https://github.com/nickjj/docker-django-example/blob/main/bin/rename-projec
 and perform the actions manually. It's mostly running a find / replace across
 files and then renaming a few directories and files.
 
-#### Start and setup the project:
+#### Start and setup the project
 
 This won't take as long as before because Docker can re-use most things. We'll
 also need to setup our database since a new one will be created for us by
@@ -328,7 +328,7 @@ docker compose up --build
 ./run manage migrate
 ```
 
-#### Sanity check to make sure the tests still pass:
+#### Sanity check to make sure the tests still pass
 
 It's always a good idea to make sure things are in a working state before
 adding custom changes.
@@ -343,7 +343,7 @@ If everything passes now you can optionally `git add -A && git commit -m
 "Initial commit"` and start customizing your app. Alternatively you can wait
 until you develop more of your app before committing anything. It's up to you!
 
-#### Tying up a few loose ends:
+#### Tying up a few loose ends
 
 You'll probably want to create a fresh `CHANGELOG.md` file for your project. I
 like following the style guide at <https://keepachangelog.com/> but feel free
@@ -369,7 +369,7 @@ figured out what you want to update, go make those updates in your
 Or, let's say you've customized your app and it's time to add a new dependency,
 either for Python or Node.
 
-#### In development:
+#### In development
 
 ##### Option 1
 
@@ -389,14 +389,14 @@ removing one as well.
 You can also access `uv` and `yarn` in Docker with `./run uv` and `./run yarn`
 after you've upped the project.
 
-#### In CI:
+#### In CI
 
 You'll want to run `docker compose build` since it will use any existing lock
 files if they exist. You can also check out the complete CI test pipeline in
 the [run](https://github.com/nickjj/docker-django-example/blob/main/run) file
 under the `ci:test` function.
 
-#### In production:
+#### In production
 
 This is usually a non-issue since you'll be pulling down pre-built images from
 a Docker registry but if you decide to build your Docker images directly on
