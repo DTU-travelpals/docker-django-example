@@ -6,6 +6,7 @@ from django.shortcuts import render
 
 from .tasks import add_name_to_queue
 
+
 def home(request):
     if request.method == "POST":
         name = request.POST.get("name", "Anonymous")
