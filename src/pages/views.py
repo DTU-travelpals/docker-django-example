@@ -1,5 +1,7 @@
+import json
 import os
 
+import redis
 from django import get_version
 from django.conf import settings
 from django.shortcuts import render
@@ -26,3 +28,19 @@ def home(request):
     }
 
     return render(request, "pages/home.html", context)
+
+
+def task_list(request):
+    r = redis.from_url(settings.REDIS_URL)
+    task_keys = r.keys("celery-task-meta-*")
+    tasks = []
+    for key in task_keys:
+        task_data = r.get(key)
+        if task_data:
+            tasks.append(json.loads(task_data))
+
+    context = {
+        "tasks": tasks,
+    }
+
+    return render(request, "pages/tasks.html", context)
