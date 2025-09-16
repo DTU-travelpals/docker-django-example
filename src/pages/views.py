@@ -1,12 +1,10 @@
-import json
 import os
 
-import redis
 from django import get_version
 from django.conf import settings
 from django.shortcuts import render
 
-from .tasks import add_name_to_queue
+from .tasks import add_name_to_queue, read_tasks_from_db
 
 
 def home(request):
@@ -31,16 +29,8 @@ def home(request):
 
 
 def task_list(request):
-    r = redis.from_url(settings.REDIS_URL)
-    task_keys = r.keys("celery-task-meta-*")
-    tasks = []
-    for key in task_keys:
-        task_data = r.get(key)
-        if task_data:
-            tasks.append(json.loads(task_data))
-
     context = {
-        "tasks": tasks,
+        "tasks": read_tasks_from_db(settings),
     }
 
     return render(request, "pages/tasks.html", context)
