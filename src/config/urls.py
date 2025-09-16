@@ -1,5 +1,5 @@
 """
-URL configuration for hello project.
+URL configuration for our project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.2/topics/http/urls/
@@ -23,6 +23,7 @@ urlpatterns = [
     path("up/", include("up.urls")),
     path("", include("pages.urls")),
     path("admin/", admin.site.urls),
+    
 ]
 if not settings.TESTING:
     urlpatterns = [
