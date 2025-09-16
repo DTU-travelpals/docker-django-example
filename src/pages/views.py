@@ -4,7 +4,7 @@ from django import get_version
 from django.conf import settings
 from django.shortcuts import render
 
-from .tasks import add_name_to_queue
+from .tasks import add_name_to_queue, read_tasks_from_db
 
 
 def home(request):
@@ -26,3 +26,11 @@ def home(request):
     }
 
     return render(request, "pages/home.html", context)
+
+
+def task_list(request):
+    context = {
+        "tasks": read_tasks_from_db(settings),
+    }
+
+    return render(request, "pages/tasks.html", context)
