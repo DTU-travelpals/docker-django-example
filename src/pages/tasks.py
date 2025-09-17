@@ -25,3 +25,13 @@ def read_tasks_from_db(settings):
     tasks.sort(key=lambda x: x.get("date_done") or "", reverse=True)
 
     return tasks
+
+
+def update_task_in_db(settings, task_id, data_to_update):
+    r = redis.from_url(settings.REDIS_URL)
+    key = f"celery-task-meta-{task_id}"
+    task_data = r.get(key)
+    if task_data:
+        task = json.loads(task_data)
+        task.update(data_to_update)
+        r.set(key, json.dumps(task))
