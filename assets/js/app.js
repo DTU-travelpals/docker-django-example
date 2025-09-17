@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // Set initial sort state for the 'Date Done' column
   const dateDoneHeader = document.getElementById('date-done-header');
   if (dateDoneHeader) {
-    dateDoneHeader.dataset.sortState = 'asc';
+    dateDoneHeader.dataset.sortState = 'desc';
     const arrow = document.createElement('span');
-    arrow.classList.add('sort-arrow', 'asc');
+    arrow.classList.add('sort-arrow', 'desc');
     dateDoneHeader.appendChild(arrow);
   }
 
@@ -55,20 +55,35 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       // Determine the rows to sort
-      const rowsToSort = sortState === 'none' 
+      const rowsToSort = sortState === 'none'
         ? rows.slice().sort((a, b) => a.dataset.originalIndex - b.dataset.originalIndex)
         : rows.slice().sort((a, b) => {
             const aValue = a.cells[index].textContent.trim();
             const bValue = b.cells[index].textContent.trim();
-
-            const aNum = parseFloat(aValue);
-            const bNum = parseFloat(bValue);
+            const isDateColumn = header.id === 'date-done-header';
 
             let comparison = 0;
-            if (!isNaN(aNum) && !isNaN(bNum)) {
-              comparison = aNum - bNum;
+
+            if (isDateColumn) {
+              const aDate = aValue && aValue !== 'None' ? new Date(aValue.replace('a.m.', 'am').replace('p.m.', 'pm')) : null;
+              const bDate = bValue && bValue !== 'None' ? new Date(bValue.replace('a.m.', 'am').replace('p.m.', 'pm')) : null;
+
+              if (aDate && bDate) {
+                comparison = aDate - bDate;
+              } else if (aDate) {
+                comparison = -1; // a has date, b doesn't, so a comes first
+              } else if (bDate) {
+                comparison = 1; // b has date, a doesn't, so b comes first
+              }
             } else {
-              comparison = aValue.localeCompare(bValue);
+              const aNum = parseFloat(aValue);
+              const bNum = parseFloat(bValue);
+
+              if (!isNaN(aNum) && !isNaN(bNum)) {
+                comparison = aNum - bNum;
+              } else {
+                comparison = aValue.localeCompare(bValue);
+              }
             }
 
             return sortState === 'asc' ? comparison : -comparison;
@@ -77,6 +92,41 @@ document.addEventListener('DOMContentLoaded', function () {
       // Re-append sorted rows
       tbody.innerHTML = '';
       rowsToSort.forEach(row => tbody.appendChild(row));
+    });
+  });
+
+  const checkboxes = table.querySelectorAll('.task-completed-checkbox');
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const taskId = this.dataset.taskId;
+      const isChecked = this.checked;
+
+      // We need a CSRF token for Django POST requests
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      fetch('/tasks/update-status/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify({
+          task_id: taskId,
+          completed: isChecked,
+        }),
+      })
+      .then(response => {
+        if (!response.ok) {
+          // Revert checkbox state if the update fails
+          this.checked = !isChecked;
+          // Optionally, show an error message to the user
+          console.error('Failed to update task status.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        this.checked = !isChecked;
+      });
     });
   });
 });
