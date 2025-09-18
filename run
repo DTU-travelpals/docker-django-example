@@ -32,18 +32,7 @@ cmd() {
   _dc web "${@}"
 }
 
-manage() {
-  # Run any manage.py commands
 
-  # We need to collectstatic before we run our tests.
-  if [ "${1-''}" == "test" ]; then
-    cmd python3 manage.py collectstatic --no-input
-    shift
-    cmd python3 manage.py test "${@}"
-  else
-    cmd python3 manage.py "${@}"
-  fi
-}
 
 lint:dockerfile() {
   # Lint Dockerfile
@@ -219,10 +208,9 @@ ci:test() {
 
   docker compose logs
 
-  lint "${@}"
+  lint
   format --check --diff
-  manage migrate
-  manage test "${@}"
+  cmd pytest "${@}"
 }
 
 help() {
