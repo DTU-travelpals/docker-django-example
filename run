@@ -34,13 +34,12 @@ cmd() {
 
 manage() {
   # Run any manage.py commands
-  local args=("${@}")
 
   # We need to collectstatic before we run our tests.
   if [ "${1-''}" == "test" ]; then
     cmd python3 manage.py collectstatic --no-input
-    unset "args[0]"
-    cmd python3 manage.py test "${args[@]}"
+    shift
+    cmd python3 manage.py test "${@}"
   else
     cmd python3 manage.py "${@}"
   fi
