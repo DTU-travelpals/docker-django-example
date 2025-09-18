@@ -32,7 +32,10 @@ cmd() {
   _dc web "${@}"
 }
 
-
+manage() {
+  # Run any manage.py commands
+  cmd python3 manage.py "${@}"
+}
 
 lint:dockerfile() {
   # Lint Dockerfile
