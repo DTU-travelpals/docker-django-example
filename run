@@ -213,7 +213,7 @@ ci:test() {
 
   lint
   format --check --diff
-  cmd pytest "${@}"
+  cmd pytest src "${@}"
 }
 
 help() {
