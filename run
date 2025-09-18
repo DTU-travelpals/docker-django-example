@@ -200,7 +200,7 @@ ci:install-deps() {
 
 ci:test() {
   # Execute Continuous Integration (CI) pipeline
-  lint:dockerfile "${@}"
+  lint:dockerfile
   lint:shell
   format:shell --diff
 
@@ -217,7 +217,7 @@ ci:test() {
 
   docker compose logs
 
-  lint "${@}"
+  lint
   format --check --diff
   cmd pytest "${@}"
 }
