@@ -10,16 +10,51 @@
       <table id="task-table" class="min-w-full bg-white border border-gray-200">
         <thead>
           <tr class="bg-gray-100">
-            <th class="px-6 py-3 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Completed</th>
-            <th class="sortable-header px-6 py-3 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Task ID</th>
-            <th class="sortable-header px-6 py-3 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
-            <th class="sortable-header px-6 py-3 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Result</th>
-            <th id="date-done-header" class="sortable-header px-6 py-3 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date Done</th>
+            <th class="px-6 py-3 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <a href="?sort_by=completed&sort_order={% if sort_by == 'completed' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                Completed
+                {% if sort_by == 'completed' %}
+                  <span class="sort-arrow {% if sort_order == 'asc' %}asc{% else %}desc{% endif %}"></span>
+                {% endif %}
+              </a>
+            </th>
+            <th class="px-6 py-3 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <a href="?sort_by=task_id&sort_order={% if sort_by == 'task_id' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                Task ID
+                {% if sort_by == 'task_id' %}
+                  <span class="sort-arrow {% if sort_order == 'asc' %}asc{% else %}desc{% endif %}"></span>
+                {% endif %}
+              </a>
+            </th>
+            <th class="w-fit px-6 py-3 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <a href="?sort_by=status&sort_order={% if sort_by == 'status' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                Status
+                {% if sort_by == 'status' %}
+                  <span class="sort-arrow {% if sort_order == 'asc' %}asc{% else %}desc{% endif %}"></span>
+                {% endif %}
+              </a>
+            </th>
+            <th class="w-fit px-6 py-3 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <a href="?sort_by=result&sort_order={% if sort_by == 'result' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                Result
+                {% if sort_by == 'result' %}
+                  <span class="sort-arrow {% if sort_order == 'asc' %}asc{% else %}desc{% endif %}"></span>
+                {% endif %}
+              </a>
+            </th>
+            <th class="px-6 py-3 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <a href="?sort_by=date_done&sort_order={% if sort_by == 'date_done' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                Date Done
+                {% if sort_by == 'date_done' %}
+                  <span class="sort-arrow {% if sort_order == 'asc' %}asc{% else %}desc{% endif %}"></span>
+                {% endif %}
+              </a>
+            </th>
           </tr>
         </thead>
         <tbody class="bg-white">
           {% for task in tasks %}
-            <tr data-original-index="{{ forloop.counter0 }}">
+            <tr>
               <td class="px-6 py-4 whitespace-nowrap border-b border-gray-200">
                 <input type="checkbox" class="task-completed-checkbox" data-task-id="{{ task.task_id }}" {% if task.completed %}checked{% endif %}>
               </td>
