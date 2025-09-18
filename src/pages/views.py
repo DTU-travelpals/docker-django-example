@@ -32,8 +32,28 @@ def home(request):
 
 
 def task_list(request):
+    sort_by = request.GET.get("sort_by", "date_done")
+    sort_order = request.GET.get("sort_order", "desc")
+
+    # Validate sort_by to prevent arbitrary code execution
+    valid_sort_fields = [
+        "task_id",
+        "status",
+        "result",
+        "date_done",
+        "completed",
+    ]
+    if sort_by not in valid_sort_fields:
+        sort_by = "date_done"  # Default to a safe value
+
+    tasks = read_tasks_from_db(
+        settings, sort_by=sort_by, sort_order=sort_order
+    )
+
     context = {
-        "tasks": read_tasks_from_db(settings),
+        "tasks": tasks,
+        "sort_by": sort_by,
+        "sort_order": sort_order,
     }
 
     return render(request, "pages/tasks.html", context)
