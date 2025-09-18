@@ -219,8 +219,7 @@ ci:test() {
 
   lint "${@}"
   format --check --diff
-  manage migrate
-  manage test
+  cmd pytest
 }
 
 help() {
