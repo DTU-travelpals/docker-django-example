@@ -28,3 +28,4 @@ extend-select = ["I", "SIM"]
 
 [tool.pytest.ini_options]
 testpaths = ["src"]
+python_files = "tests.py"
