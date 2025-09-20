@@ -54,7 +54,9 @@ lint:shell() {
 
   find . -type f \
     ! -path "./.git/*" \
+    ! -path "./.github/*" \
     ! -path "./.ruff_cache/*" \
+    ! -path "./.venv/*" \
     ! -path "./.pytest_cache/*" \
     ! -path "./assets/*" \
     ! -path "./public/*" \
@@ -198,7 +200,7 @@ ci:test() {
   lint:shell
   format:shell --diff
 
-  cp --no-clobber .env.example .env
+  cp --no-clobber .env.test .env
 
   docker compose build
   docker compose up -d
