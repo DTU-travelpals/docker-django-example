@@ -40,6 +40,6 @@ jobs:
         if: (!cancelled())
         with:
           files: |
-            test-results/**/*.xml
-            test-results/**/*.trx
-            test-results/**/*.json
+            /app/src/test-results/*.xml
+            /app/src/test-results/*.trx
+            /app/src/test-results/*.json
