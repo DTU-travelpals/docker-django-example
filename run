@@ -221,7 +221,8 @@ ci:test() {
   format --check --diff
   manage migrate
   manage test
-  cmd "pytest --junitxml=test-results/${GITHUB_REF}_${GITHUB_RUN_NUMBER}/pytest_report.xml"
+  # test results for "${GITHUB_REF}_${GITHUB_RUN_NUMBER}"
+  cmd pytest --junitxml=test-results
 }
 
 help() {
