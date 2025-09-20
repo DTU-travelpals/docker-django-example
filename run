@@ -223,7 +223,7 @@ ci:test() {
   manage test
   # test results for "${GITHUB_REF}_${GITHUB_RUN_NUMBER}" "${GITHUB_OUTPUT}/"
   cmd mkdir -p test-results
-  cmd pytest --junitxml=test-results/report.xml --cov --cov-report=xml:test-results/coverage.xml --cov-report html:test-results/coverage
+  cmd pytest --junitxml=test-results/unittest.xml --cov=src --cov-report=xml:test-results/coverage.xml --cov-report html:test-results/coverage
   # with cmd we are in web container, the pwd is /app/src
   docker compose cp web:/app/src/test-results .
 }
