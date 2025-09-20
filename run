@@ -222,7 +222,7 @@ ci:test() {
   manage migrate
   manage test
   # test results for "${GITHUB_REF}_${GITHUB_RUN_NUMBER}"
-  cmd pytest --junitxml=test-results
+  cmd pytest --junitxml=test-results/report.xml
 }
 
 help() {
