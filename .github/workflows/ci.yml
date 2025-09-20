@@ -39,8 +39,4 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: (!cancelled())
         with:
-          files: |
-            ${GITHUB_OUTPUT}/test-results/*.xml
-            ${GITHUB_OUTPUT}/test-results/*.trx
-            ${GITHUB_OUTPUT}/test-results/*.json
-            ${GITHUB_OUTPUT}/test-results/*.html
+          files: "test-results/*.*"
