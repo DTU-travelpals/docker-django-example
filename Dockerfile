@@ -1,4 +1,4 @@
-FROM node:22.18.0-bookworm-slim AS assets
+FROM node:22.19.0-trixie-slim AS assets
 LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
 
 WORKDIR /app/assets
@@ -49,7 +49,7 @@ RUN apt-get update \
   && useradd --create-home --no-log-init -u "${UID}" -g "${GID}" python \
   && chown python:python -R /app
 
-COPY --from=ghcr.io/astral-sh/uv:0.7.13 /uv /uvx /usr/local/bin/
+COPY --from=ghcr.io/astral-sh/uv:0.8.17 /uv /uvx /usr/local/bin/
 
 USER python
 
@@ -69,7 +69,7 @@ CMD ["bash"]
 
 ###############################################################################
 
-FROM python:3.13.7-slim-bookworm AS app
+FROM python:3.13.7-slim-trixie AS app
 LABEL maintainer="Nick Janetakis <nick.janetakis@gmail.com>"
 
 WORKDIR /app
