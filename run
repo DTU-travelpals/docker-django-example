@@ -34,6 +34,10 @@ cmd() {
 
 manage() {
   # Run any manage.py commands
+  # We need to collectstatic before we run our tests.
+  if [ "${1-''}" == "test" ]; then
+    cmd python3 manage.py collectstatic --no-input
+  fi
   cmd python3 manage.py "${@}"
 }
 
@@ -41,7 +45,7 @@ lint:dockerfile() {
   # Lint Dockerfile
   docker container run --rm -i \
     -v "${PWD}/.hadolint.yaml:/.config/hadolint.yaml" \
-    hadolint/hadolint hadolint - <Dockerfile
+    hadolint/hadolint hadolint "${@}" - <Dockerfile
 }
 
 lint:shell() {
@@ -66,7 +70,7 @@ lint:shell() {
 
 lint() {
   # Lint Python code
-  cmd ruff check
+  cmd ruff check "${@}"
 }
 
 format:shell() {
@@ -196,7 +200,7 @@ ci:install-deps() {
 
 ci:test() {
   # Execute Continuous Integration (CI) pipeline
-  lint:dockerfile
+  lint:dockerfile "${@}"
   lint:shell
   format:shell --diff
 
@@ -213,9 +217,11 @@ ci:test() {
 
   docker compose logs
 
-  lint
+  lint "${@}"
   format --check --diff
-  cmd pytest "${@}"
+  manage migrate
+  manage test
+  cmd pytest --junitxml=report.xml
 }
 
 help() {
