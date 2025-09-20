@@ -12,6 +12,9 @@ practices](https://nickjanetakis.com/blog/best-practices-around-production-ready
 based on building and deploying dozens of assorted Dockerized web apps since
 late 2014.
 
+**This app is using Django and Python**. The screenshot shows
+`X.X.X` since they get updated regularly:
+
 upstream        <https://github.com/nickjj/docker-django-example.git> (fetch)
 upstream        <https://github.com/nickjj/docker-django-example.git> (push)
 
@@ -32,8 +35,6 @@ git push origin main --force
 This will overwrite your fork's main branch with the upstream's main branch.
  The --force flag is necessary because you are rewriting history.
 
-**This app is using Django 5.2.5 and Python 3.13.7**. The screenshot shows
-`X.X.X` since they get updated regularly:
 
 [![Screenshot](.github/docs/screenshot.jpg)](https://github.com/nickjj/docker-django-example/blob/main/.github/docs/screenshot.jpg?raw=true)
 
@@ -284,7 +285,7 @@ few variants of the string "hello" and update a few Docker related resources.
 And by we I mean I created a zero dependency shell script that does all of the
 heavy lifting for you. All you have to do is run the script below.
 
-#### Run the rename-project script included in this repo
+### Run the rename-project script included in this repo
 
 ```sh
 # The script takes 2 arguments.

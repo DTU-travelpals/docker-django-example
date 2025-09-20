@@ -28,7 +28,7 @@ Changelog](https://keepachangelog.com/en/1.0.0/).
 #### Languages and services
 
 - Update `Python` to `3.13.7`
-- Update `Node` to `22.18.0`
+- Update `Node` to `22.19.0`
 - Update `Postgres` to `17.6`
 - Update `Redis` to `8.2.1`
 
@@ -36,20 +36,20 @@ Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Update `celery` to `5.5.3`
 - Update `django-debug-toolbar` to `6.0.0`
-- Update `django` to `5.2.5`
+- Update `django` to `5.2.6`
 - Update `gunicorn` to `23.0.0`
-- Update `psycopg` to `3.2.9`
+- Update `psycopg` to `3.2.10`
 - Update `redis` to `6.4.0`
-- Update `ruff` to `0.12.10`
+- Update `ruff` to `0.13.0`
 - Update `setuptools` to `80.9.0`
-- Update `whitenoise` to `6.9.0`
+- Update `whitenoise` to `6.10.0`
 
 #### Front-end dependencies
 
-- Update `@tailwindcss/cli` to `4.1.12`
-- Update `@tailwindcss/postcss` to `4.1.12`
+- Update `@tailwindcss/cli` to `4.1.13`
+- Update `@tailwindcss/postcss` to `4.1.13`
 - Update `esbuild` to `0.25.9`
-- Update `tailwindcss` to `4.1.12`
+- Update `tailwindcss` to `4.1.13`
 
 ## [0.11.0] - 2024-08-09
 
