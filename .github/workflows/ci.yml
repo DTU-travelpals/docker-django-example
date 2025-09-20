@@ -40,9 +40,14 @@ jobs:
           echo "Contents of test-results:"
           find test-results
       
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-xml-coverage-path: "test-results/coverage.xml"
+          junitxml-path: "test-results/report.xml"
+      
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: (!cancelled())
         with:
-          files: "test-results/**/*.*"
-        
+          files: "test-results/**/unittest.xml"
