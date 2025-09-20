@@ -34,8 +34,6 @@ jobs:
           sed -i "s|export NODE_ENV|#export NODE_ENV|g" .env*
 
           ./run ci:test
-          pwd
-          ls -alR .
       
       - name: Debug test results
         run: |
@@ -46,5 +44,5 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: (!cancelled())
         with:
-          files: "test-results/**/*.*"
+          files: "test-results/**/*.xml
         
