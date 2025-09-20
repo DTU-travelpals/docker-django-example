@@ -34,10 +34,6 @@ jobs:
           sed -i "s|export NODE_ENV|#export NODE_ENV|g" .env*
 
           ./run ci:test
-      - name: Copy test results from /tmp to test-results
-        run: |
-          mkdir -p test-results
-          docker cp $(docker ps -aq -f name=your_container_name)://tmp/test-results/. test-results/ || echo "No files copied"
       
       - name: Debug test results
         run: |
@@ -48,4 +44,5 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: (!cancelled())
         with:
-          files: "test-results/*.*"
+          files: "test-results/**/*.*"
+        

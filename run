@@ -211,9 +211,9 @@ ci:test() {
 
   # shellcheck disable=SC1091
   . .env
-  wait-until "docker compose exec -T \
-    -e PGPASSWORD=${POSTGRES_PASSWORD} postgres \
-    psql -U ${POSTGRES_USER} ${POSTGRES_USER} -c 'SELECT 1'"
+  #wait-until "docker compose exec -T \
+  #  -e PGPASSWORD=${POSTGRES_PASSWORD} postgres \
+  #  psql -U ${POSTGRES_USER} ${POSTGRES_USER} -c 'SELECT 1'"
 
   docker compose logs
 
@@ -222,10 +222,10 @@ ci:test() {
   manage migrate
   manage test
   # test results for "${GITHUB_REF}_${GITHUB_RUN_NUMBER}" "${GITHUB_OUTPUT}/"
-  cmd mkdir -p /tmp/test-results
-  cmd pytest --junitxml=/tmp/test-results/report.xml --cov --cov-report html:/tmp/test-results/coverage.html
+  cmd mkdir -p ../test-results
+  cmd pytest --junitxml=../test-results/report.xml --cov --cov-report html:../test-results/coverage
   docker ps
-  docker cp container_id:/tmp/test-results/. ./test-results/
+  # docker cp container_id:/tmp/test-results/. ./test-results/
 }
 
 help() {
