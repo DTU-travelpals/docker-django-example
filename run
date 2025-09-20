@@ -225,7 +225,7 @@ ci:test() {
   cmd mkdir -p test-results
   cmd pytest --junitxml=test-results/report.xml --cov --cov-report html:test-results/coverage
   cmd pwd
-  cmd ls -al test-results
+  cmd ls -alR .
   # docker ps
 }
 

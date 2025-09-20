@@ -35,11 +35,13 @@ jobs:
 
           ./run ci:test
           pwd
+          ls-alR .
       
       - name: Debug test results
         run: |
           echo "Contents of test-results:"
           pwd
+          ls-alR .
           find test-results
       
       - name: Publish Test Results
