@@ -224,6 +224,8 @@ ci:test() {
   # test results for "${GITHUB_REF}_${GITHUB_RUN_NUMBER}" "${GITHUB_OUTPUT}/"
   cmd mkdir -p ../test-results
   cmd pytest --junitxml=../test-results/report.xml --cov --cov-report html:../test-results/coverage
+  pwd
+  ls -al ../test-results
   docker ps
   # docker cp container_id:/tmp/test-results/. ./test-results/
 }
