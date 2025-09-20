@@ -221,7 +221,7 @@ ci:test() {
   format --check --diff
   manage migrate
   manage test
-  # cmd pytest --junitxml=report.xml
+  cmd pytest --junitxml=report.xml
 }
 
 help() {

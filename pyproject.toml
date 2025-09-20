@@ -28,5 +28,5 @@ extend-select = ["I", "SIM"]
 
 [tool.pytest.ini_options]
 testpaths = ["src"]
-python_files = "tests.py"
+python_files = ["tests.py", "test_*.py", "*_test.py", "testing/python/*.py"]
 DJANGO_SETTINGS_MODULE = "config.settings"
