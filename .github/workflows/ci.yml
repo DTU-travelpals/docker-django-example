@@ -35,6 +35,11 @@ jobs:
 
           ./run ci:test
 
+      - name: Debug test results
+        run: |
+          echo "Test results contents:"
+          ls -R test-results || echo "test-results not found"
+      
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: (!cancelled())
