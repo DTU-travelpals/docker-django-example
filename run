@@ -222,11 +222,9 @@ ci:test() {
   manage migrate
   manage test
   # test results for "${GITHUB_REF}_${GITHUB_RUN_NUMBER}" "${GITHUB_OUTPUT}/"
-  mkdir -p test-results
-  pytest --junitxml=test-results/report.xml --cov --cov-report html:test-results/coverage
-  docker ps
-  cmd pwd
-  cmd ls -alR .
+  cmd mkdir -p test-results
+  cmd pytest --junitxml=test-results/report.xml --cov --cov-report html:test-results/coverage
+  docker cp web:/app/src/test-results .
 }
 
 help() {
