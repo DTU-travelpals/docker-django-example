@@ -34,10 +34,12 @@ jobs:
           sed -i "s|export NODE_ENV|#export NODE_ENV|g" .env*
 
           ./run ci:test
+          pwd
       
       - name: Debug test results
         run: |
           echo "Contents of test-results:"
+          pwd
           find test-results
       
       - name: Publish Test Results
