@@ -34,3 +34,12 @@ jobs:
           sed -i "s|export NODE_ENV|#export NODE_ENV|g" .env*
 
           ./run ci:test
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: (!cancelled())
+        with:
+          files: |
+            test-results/**/*.xml
+            test-results/**/*.trx
+            test-results/**/*.json

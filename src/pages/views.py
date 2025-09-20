@@ -12,7 +12,9 @@ from .tasks import add_name_to_queue, read_tasks_from_db, update_task_in_db
 
 def home(request):
     if request.method == "POST":
-        name = request.POST.get("name", "Anonymous")
+        name: str = request.POST.get("name")
+        if not name:
+            name = "Anonymous"
         add_name_to_queue.delay(name)
         context = {
             "message": f"Hello {name}, your name has been added to the queue!",
