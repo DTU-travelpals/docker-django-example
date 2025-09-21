@@ -18,6 +18,15 @@ dependencies = [
   "pytest-django==4.10.0",
   "pytest-cov==5.0.0",
   "django-stubs==5.0.2",
+  "fakeredis>=2.31.1",
+]
+
+dev-dependencies = [
+    "pytest-django",
+    "pytest-sugar",
+    "ruff",
+    "django-debug-toolbar",
+    "fakeredis",
 ]
 
 [tool.ruff]
