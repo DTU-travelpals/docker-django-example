@@ -47,7 +47,8 @@ def read_tasks_from_db(
             except (TypeError, ValueError):
                 # Fallback for invalid date formats
                 return datetime.min
-
+        if sort_by == "completed":
+            return str(value)
         # For other columns, we can return the value as is
         return value
 
