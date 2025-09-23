@@ -44,7 +44,7 @@ jobs:
         uses: MishaKav/pytest-coverage-comment@main
         with:
           pytest-xml-coverage-path: "test-results/coverage.xml"
-          junitxml-path: "test-results/unittest.xmlgit "
+          junitxml-path: "test-results/unittest.xml"
       
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
