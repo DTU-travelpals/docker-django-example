@@ -39,3 +39,12 @@ extend-select = ["I", "SIM"]
 testpaths = ["src"]
 python_files = ["tests.py", "test_*.py", "*_test.py", "testing/python/*.py"]
 DJANGO_SETTINGS_MODULE = "config.settings"
+
+[tool.coverage.run]
+omit = [
+    "config/celery.py",
+    "config/celery.py",
+    "config/settings.py",
+    "config/*sgi.py",
+    "manage.py"
+]
