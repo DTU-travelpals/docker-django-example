@@ -197,8 +197,11 @@ class TasksTests(TestCase):
         result = add_name_to_queue("test")
         self.assertEqual(result, "test")
 
-    @patch("pages.tasks.redis", new_callable=fakeredis.FakeRedis)
-    def test_read_tasks_from_db(self, mock_redis):
+    @patch("pages.tasks.redis.from_url")
+    def test_read_tasks_from_db(self, mock_from_url):
+        mock_redis = fakeredis.FakeRedis()
+        mock_from_url.return_value = mock_redis
+
         for task in self.mock_tasks:
             mock_redis.set(
                 f"celery-task-meta-{task['task_id']}", json.dumps(task)
@@ -208,8 +211,11 @@ class TasksTests(TestCase):
         )
         self.assertEqual(len(tasks), 3)
 
-    @patch("pages.tasks.redis", new_callable=fakeredis.FakeRedis)
-    def test_update_task_in_db(self, mock_redis):
+    @patch("pages.tasks.redis.from_url")
+    def test_update_task_in_db(self, mock_from_url):
+        mock_redis = fakeredis.FakeRedis()
+        mock_from_url.return_value = mock_redis
+
         task_id = self.mock_tasks[0]["task_id"]
         mock_redis.set(
             f"celery-task-meta-{task_id}", json.dumps(self.mock_tasks[0])
@@ -218,18 +224,12 @@ class TasksTests(TestCase):
         update_task_in_db(settings, task_id, data_to_update)
 
         updated_task = self.mock_tasks[0].copy()
-        # read_task = read_tasks_from_db(settings).pop(0)
-        # print("read_task", read_task)
-
         updated_task.update(data_to_update)
-        # print("updated_task", updated_task)
-        from_redis_task: str = json.loads(
+
+        from_redis_task = json.loads(
             mock_redis.get(f"celery-task-meta-{task_id}")
         )
-        assert from_redis_task
-        # print("redis_get", from_redis_task)
-        # This test does not yet work, completed is still true in from_redis_task
-        # self.assertEqual(from_redis_task, updated_task)
+        self.assertEqual(from_redis_task, updated_task)
 
     def test_read_tasks_from_db_sorting_with_none(self):
         mock_tasks = [
